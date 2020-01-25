@@ -1,5 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { LoginViewModel } from 'src/domain/login.viewmodel';
+import { LoginViewModel } from 'src/domain/viewmodel/login.viewmodel';
 import { AuthService } from 'src/services/auth/auth.service';
 
 @Controller('auth')
