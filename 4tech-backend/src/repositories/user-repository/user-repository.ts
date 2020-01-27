@@ -19,9 +19,9 @@ export class UserRepository {
             })
     }
 
-    async getById(id: string): Promise<User>{
+    async getById(userId: string): Promise<User>{
         return await this.userCollection
-            .findOne({ _id: id })
+            .findOne({ _id: userId })
             .lean();
     }
 

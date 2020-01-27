@@ -32,13 +32,13 @@ export class UserActivityService {
         
         const userActivity = await this.userActivityRepository.getById(likeOrDislikeViewModel.userActivityId);
         if(!userActivity){
-            throw new BadRequestException('An user activity with the given id does not exist')
+            console.log(userActivity);
+            throw new BadRequestException('An user activity with the given id does not exist');
         }
         
-        const user = await this.userRepository.getById(likeOrDislikeViewModel.userActivityId);
+        const user = await this.userRepository.getById(likeOrDislikeViewModel.userId);
         if(!user){
-            console.log(user);
-            throw new BadRequestException('An user with the given ID does not exists')
+            throw new BadRequestException('An user with the given ID does not exists');
         }
 
         if(userActivity.likes.includes(user._id.toString())){

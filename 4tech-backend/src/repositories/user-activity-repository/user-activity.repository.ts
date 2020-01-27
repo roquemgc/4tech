@@ -34,13 +34,13 @@ export class UserActivityRepository {
         return this.getById(newUserActivity._id);
     }
 
-    async update(UserActivity) {
-        const updatedActivity = await this.userActivityCollection.findOne({
-            _id: UserActivity.id,
-            UserActivity,
-            new: true  
-        });
-        
+    async update(userActivity: UserActivityDto) {
+        const updatedActivity = await this.userActivityCollection.findOneAndUpdate(
+            {_id: userActivity._id},
+            userActivity,
+            { new: true },
+        );
+
         return await updatedActivity.save();
     }
 }

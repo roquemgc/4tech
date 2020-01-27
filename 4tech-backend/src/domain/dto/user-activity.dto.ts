@@ -1,4 +1,5 @@
 import { UserActivityCommentDto } from "./user-activit-comment.dto";
+import { mongoose } from 'mongoose'
 
 export class UserActivityDto {
 
@@ -11,6 +12,7 @@ export class UserActivityDto {
         this.comments = [];
     }
 
+    readonly _id: mongoose.Schema.Types.ObjectID;
     readonly userId: string;
     readonly fileName: string;
     readonly userName: string;
