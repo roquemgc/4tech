@@ -17,3 +17,8 @@ export const login = async (userLogin, password) => {
         return err
     }   
 }
+
+export const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+}
