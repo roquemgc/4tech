@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserViewModel } from 'src/domain/viewmodel/user.viewmodel';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/domain/schemas/user.schema'
+import { User } from 'src/mongo/schemas/user.schema'
 
 @Injectable()
 export class UserRepository {
@@ -28,7 +28,7 @@ export class UserRepository {
     async getUsers(): Promise<User[]>{
         return await this.userCollection
         .find()
-        .select({ __v: false, password: false })
+        .select({ __v: false, password: false })//Filtrar os atributos que serão retornados
         .lean();
     }
 
@@ -37,7 +37,13 @@ export class UserRepository {
         return await user.save();
     }
 
-    updateUser(userName, user: UserViewModel){
-        // this.db.splice(userName)
+    async updateUser(user: UserViewModel){
+        const updatedUser = await this.userCollection.findOneAndUpdate(
+            {userLogin: user.userLogin},
+            user,
+            { new: true },
+        );
+
+        return await updatedUser.save();
     }
 }

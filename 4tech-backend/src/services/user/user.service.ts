@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { UserRepository } from 'src/repositories/user-repository/user-repository';
+import { UserRepository } from 'src/mongo/repositories/user-repository';
 import { UserViewModel } from 'src/domain/viewmodel/user.viewmodel';
 import { LoginViewModel } from 'src/domain/viewmodel/login.viewmodel';
 
@@ -19,19 +19,15 @@ export class UserService {
         const existingUser = usersList.find(elem => elem.userName === newUser.userName);
         
         if(existingUser){
-            throw new BadRequestException('Esse usuário ja existe');
+            throw new BadRequestException('This user already exists');
         }
 
         this.userRepository.createUser(newUser);
     }
 
-    updateUser(userName, user){
-        // const usersList =  this.userRepository.getUsers();
+    updateUser(user){
 
-        // const existingUser = usersList.filter(elem => (elem.userName === userName));
-        // console.log(existingUser);
-
-        // this.userRepository.updateUser(userName, user);
+        this.userRepository.updateUser(user);
     }
 
     async attemptLogin(login: LoginViewModel){

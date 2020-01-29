@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, UseGuards, Delete } from '@nestjs/common';
 import { UserService } from 'src/services/user/user.service';
 import { UserViewModel } from 'src/domain/viewmodel/user.viewmodel';
 import { AuthGuard } from '@nestjs/passport'
@@ -22,9 +22,10 @@ export class UserController {
     }
 
     @UseGuards(AuthGuard('jwt'))
-    @Put(':userName/update')
-    updateUser(@Param('userName') userName, @Body() user: UserViewModel){
-        return this.userService.updateUser(userName, user);
+    @Put('/update')
+    updateUser(@Body() user: UserViewModel){
+        console.log(user);
+        return this.userService.updateUser(user);
     }
 
 }

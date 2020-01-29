@@ -13,11 +13,11 @@ import { AppService } from './app.service';
 import { AuthService } from './services/auth/auth.service';
 import { UserActivityService } from './services/user-activity/user-activity.service'
 
-import { UserRepository } from './repositories/user-repository/user-repository';
-import { UserActivitySchema } from './domain/schemas/user-activity.schema';
-import { UserActivityRepository } from './repositories/user-activity-repository/user-activity.repository';
+import { UserRepository } from './mongo/repositories/user-repository';
+import { UserActivitySchema } from './mongo/schemas/user-activity.schema';
+import { UserActivityRepository } from './mongo/repositories/user-activity.repository';
 
-import { UserSchema } from './domain/schemas/user.schema';
+import { UserSchema } from './mongo/schemas/user.schema';
 import { WebsocketGateway } from './websocket/websocket.gateway';
 
 

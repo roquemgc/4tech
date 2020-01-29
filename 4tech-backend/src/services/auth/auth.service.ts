@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { LoginViewModel } from 'src/domain/viewmodel/login.viewmodel';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from 'src/repositories/user-repository/user-repository';
+import { UserRepository } from 'src/mongo/repositories/user-repository';
 
 @Injectable()
 export class AuthService {

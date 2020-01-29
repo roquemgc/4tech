@@ -1,0 +1,48 @@
+.grid.postcard {
+    padding-bottom: 2rem;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.postcard .form {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.postcard .form .postbutton {
+    align-self: flex-end;
+}
+
+.paper .droparea {
+    background-color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    text-align: center;
+    height: auto;
+    min-height: auto;
+}
+
+.paper .droparea p {
+    color: #B8B8B8;
+    margin: 0;
+}
+
+.paper .droparea > div > svg {
+    display: none;
+}
+
+.paper .droparea > div {
+    margin: 0;
+    width: auto;
+}
+
+.paper .droparea > div > div,
+.paper .droparea > div > div > img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    flex-basis: 100%;
+    padding: 0;
+}

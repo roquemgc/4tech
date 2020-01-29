@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { UserActivity } from "src/domain/schemas/user-activity.schema";
+import { UserActivity } from "src/mongo/schemas/user-activity.schema";
 import { Model } from 'mongoose'
 import { UserActivityDto } from "src/domain/dto/user-activity.dto";
 

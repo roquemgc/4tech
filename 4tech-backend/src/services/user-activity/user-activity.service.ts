@@ -1,12 +1,14 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { UserRepository } from 'src/repositories/user-repository/user-repository';
+import { UserRepository } from 'src/mongo/repositories/user-repository';
 import { UserActivityCommentDto } from 'src/domain/dto/user-activit-comment.dto';
 import { UserActivityDto } from 'src/domain/dto/user-activity.dto';
-import { UserActivityRepository } from 'src/repositories/user-activity-repository/user-activity.repository';
-import { UserActivity } from 'src/domain/schemas/user-activity.schema';
+import { UserActivityRepository } from 'src/mongo/repositories/user-activity.repository';
+import { UserActivity } from 'src/mongo/schemas/user-activity.schema';
 import { readFileSync } from 'fs';
-import { LikeOrDislikeViewModel } from 'src/domain/viewmodel/like-or-deslike.viewmodel';
+import { MediaCommentViewModel } from 'src/domain/viewmodel/media/media-comment.viewmodel'
+import { LikeOrDislikeViewModel } from 'src/domain/viewmodel/media/like-or-deslike.viewmodel';
 import { WebsocketGateway } from 'src/websocket/websocket.gateway';
+import { isNull } from 'util';
 
 @Injectable()
 export class UserActivityService {
@@ -28,11 +30,10 @@ export class UserActivityService {
         return await this.convertImagesToBase64(recentUploads);
     }
 
-    async likeOrDislikeUserActivity(likeOrDislikeViewModel: LikeOrDislikeViewModel){
+    async likeOrDislikeMedia(likeOrDislikeViewModel: LikeOrDislikeViewModel){
         
         const userActivity = await this.userActivityRepository.getById(likeOrDislikeViewModel.userActivityId);
         if(!userActivity){
-            console.log(userActivity);
             throw new BadRequestException('An user activity with the given id does not exist');
         }
         
@@ -52,7 +53,7 @@ export class UserActivityService {
     }
     
 
-    async uploadImage(userId: string, fileName: string, description: string){
+    async postImage(userId: string, fileName: string, description: string){
 
         const user = await this.userRepository.getById(userId);
         if(!user){ 
@@ -87,5 +88,19 @@ export class UserActivityService {
             ...userActivity,
             imgEncoded: readFileSync('../images/' + userActivity.fileName, 'base64'),
         };
+    }
+
+    async postComment(postCommentDto: MediaCommentViewModel) {
+        const post = await this.userActivityRepository.getById(postCommentDto.mediaId);
+        if (isNull(post)) { throw new BadRequestException('A Post with the given PostId could not be found'); }
+
+        const user = await this.userRepository.getById(postCommentDto.userId);
+        if (isNull(user)) { throw new BadRequestException('An user with the given UserId was not found '); }
+
+        post.comments = post.comments.concat(new MediaCommentViewModel(postCommentDto.userId, user.userName, postCommentDto.comment));
+
+        const updated = await this.userActivityRepository.update(post);
+
+        return updated.mediaComments.pop();
     }
 }

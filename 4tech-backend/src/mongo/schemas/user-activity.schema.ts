@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { UserActivityCommentDto } from '../dto/user-activit-comment.dto';
+import { MediaCommentViewModel } from 'src/domain/viewmodel/media/media-comment.viewmodel';
 
 export interface UserActivity extends mongoose.Document {
     readonly _id: mongoose.Schema.types.ObjectId,
@@ -8,17 +8,14 @@ export interface UserActivity extends mongoose.Document {
     readonly fileName: string,
     readonly timestamp: Date;
     likes: string[],
-    comments: UserActivityCommentDto[];
+    comments: MediaCommentViewModel[];
 }
 
-const UserActivityCommentsSchema = new mongoose.Schema({
+const MediaCommentSchema = new mongoose.Schema({
     userId: String,
     userName: String,
     comment: String,
-    timeStamp: {
-        type: Date,
-        default: Date.now(),
-    },
+    timeStamp: Date,
 })
 
 export const UserActivitySchema = new mongoose.Schema({
@@ -30,7 +27,7 @@ export const UserActivitySchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    comments: [UserActivityCommentsSchema]
+    comments: [MediaCommentSchema]
 });
 
 
